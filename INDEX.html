@@ -1,0 +1,160 @@
+<head>
+    <h1>Rock, Paper, Scissors!</h1>
+</head>
+<body>
+    <div>
+        <button id = "rock">ROCK</button>
+        <button id = "paper">PAPER</button>
+        <button id = "scissors">SCISSORS</button>
+    </div>
+    <div>
+        Results:
+        <div>
+            Wins:<div id = "winResults">
+            </div>
+            Losses:<div id = "lossResults">
+            </div>
+            Ties:<div id = "tieResults">
+            </div>
+        </div>    
+    </div>
+</body>
+
+<script>
+    let wins = 0;
+    let losses = 0;
+    let ties = 0;
+
+    function computerPlay(){
+        let x = Math.floor( 3 * (Math.random()));
+        if (x == 0){
+            return 'ROCK';
+        } else if (x == 1){
+            return 'PAPER';
+        } else if (x == 2){
+            return 'SCISSORS';
+        } else {
+            return 'ERROR';
+        }
+    }
+
+    function playRound(){
+        if (playerSelection === 'ROCK' && computerSelection === 'PAPER'){
+            return 'Lose';
+        } else if (playerSelection === 'ROCK' && computerSelection === 'SCISSORS'){
+            return 'Win';
+        } else if (playerSelection === 'PAPER' && computerSelection === 'ROCK'){
+            return 'Win';
+        } else if (playerSelection === 'PAPER' && computerSelection === 'SCISSORS'){
+            return 'Lose';
+        } else if (playerSelection === 'SCISSORS' && computerSelection === 'ROCK'){
+            return 'Lose';
+        } else if (playerSelection === 'SCISSORS' && computerSelection === 'PAPER'){
+            return 'Win';
+        } else if (playerSelection === computerSelection){
+            return 'Tie';
+        }
+    }
+
+    function gameOver(){
+        if ((wins + losses) == 5){
+            alert("Game over!");
+            if (wins > losses){
+                alert("Congrats! You win best of 5!");
+            } else if (losses > wins){
+                alert("Bummer! You lost to a computer!");
+            }
+            wins = 0;
+            winResults.textContent = wins;
+            losses = 0;
+            lossResults.textContent = losses;
+            ties = 0;
+            tieResults.textContent = ties;
+        }
+        
+    }
+
+    const rockButton = document.querySelector("#rock");
+    rockButton.addEventListener("click", () => {
+        playerSelection = 'ROCK';
+        computerSelection = computerPlay();
+        
+        if (playRound() === 'Win'){
+            wins++;
+            alert("Win! Rock beats Scissors!");
+        } else if (playRound() === 'Lose'){
+            losses++;
+            alert("Lose! Paper beats Rock!");
+        } else if (playRound() === 'Tie'){
+            ties++;
+            alert("Tie!");
+        }
+        const winResults = document.querySelector("#winResults");
+        winResults.textContent = wins;
+
+        const lossResults = document.querySelector("#lossResults");
+        lossResults.textContent = losses;
+
+        const tieResults = document.querySelector("#tieResults");
+        tieResults.textContent = ties;
+
+        gameOver();
+    });
+
+    const paperButton = document.querySelector("#paper");
+    paperButton.addEventListener("click", () => {
+        playerSelection = 'PAPER';
+        computerSelection = computerPlay();
+        
+        if (playRound() === 'Win'){
+            wins++;
+            alert("Win!");
+        } else if (playRound() === 'Lose'){
+            losses++;
+            alert("Lose!");
+        } else if (playRound() === 'Tie'){
+            ties++;
+            alert("Tie!");
+        }
+        const winResults = document.querySelector("#winResults");
+        winResults.textContent = wins;
+
+        const lossResults = document.querySelector("#lossResults");
+        lossResults.textContent = losses;
+
+        const tieResults = document.querySelector("#tieResults");
+        tieResults.textContent = ties;
+
+        gameOver();
+    });
+
+    const scissorsButton = document.querySelector("#scissors");
+    scissorsButton.addEventListener("click", () => {
+        playerSelection = 'SCISSORS';
+        computerSelection = computerPlay();
+        
+        if (playRound() === 'Win'){
+            wins++;
+            alert("win!");
+        } else if (playRound() === 'Lose'){
+            losses++;
+            alert("Lose!");
+        } else if (playRound() === 'Tie'){
+            ties++;
+            alert("Tie!");
+        }
+        const winResults = document.querySelector("#winResults");
+        winResults.textContent = wins;
+
+        const lossResults = document.querySelector("#lossResults");
+        lossResults.textContent = losses;
+
+        const tieResults = document.querySelector("#tieResults");
+        tieResults.textContent = ties;
+
+        gameOver();
+    });
+
+    
+    
+</script>
