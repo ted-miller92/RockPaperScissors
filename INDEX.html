@@ -1,22 +1,108 @@
 <head>
-    <h1>Rock, Paper, Scissors!</h1>
+    <style>
+        body {
+            display:grid;
+            justify-content:center;
+            background-color:rgb(90, 90, 90);
+            font-family: sans-serif;
+            font-size: 40px;
+        }
+        h1 {
+            display:grid;
+            justify-content:center;
+            justify-items:center;
+            color: rgb(230,200,40);
+        }
+        button{
+            font-size: 30px;
+            padding:20px;
+            border-style: solid;
+            border-width: 4px;
+            border-radius: 10px;
+            background-color:rgb(200, 200, 200);
+            border-color:rgb(77, 77, 77);
+            transition: 0.1s;
+        }
+        button:hover{
+            background-color: white;
+            border-color:rgb(230, 200, 40);
+            padding:15px;
+            font-size:30px;
+        }
+        button:focus{
+            outline-style: none;
+        }
+        .buttons {
+            display: grid;
+            justify-content:center;
+            align-items:right;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .roundResults{
+            background-color: rgb(200, 200, 200);
+            padding: 15px;
+            display: grid;
+            justify-items:center;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-style:solid;
+            border-radius:10px;
+            border-width;10px;
+        }
+        .wins{
+            display:grid;
+            justify-content: left;
+        }
+        .losses{
+            display:grid;
+            justify-content: center;
+        }
+        .ties{
+            display:grid;
+            justify-content: center;
+        }
+        #finalResultsContainer{
+            display:grid;
+            justify-content:center;
+            justify-items:center;
+            padding: 15px;
+            color: rgb( 230, 200, 40);;
+        }
+        .resetButtonContainer{
+            display:grid;
+            justify-content:center;
+            align-items:center;
+        }
+        #resetButton{
+            display:grid;
+            justify-items:center;
+            align-items:center;
+        }
+    </style>
 </head>
 <body>
-    <div>
+    <h1>Rock, Paper, Scissors!</h1>
+    <div class = "buttons">
         <button id = "rock">ROCK</button>
         <button id = "paper">PAPER</button>
         <button id = "scissors">SCISSORS</button>
     </div>
-    <div>
-        Results:
-        <div>
-            Wins:<div id = "winResults">
+    <div> <!--MAKE THIS MORE ORGANIZED-->
+        <div class = "roundResults">
+            <div class = "wins">Wins:</div>
+            <div class = "losses">Losses:</div>
+            <div class = "ties">Ties:</div>
+            <div class = "wins" id = "winResults">0</div>
+            <div class = "losses" id = "lossResults">0</div>
+            <div class = "ties" id = "tieResults">0</div>
+        </div>
+        <div id = "finalResultsContainer">
+            <div id = "finalResults">
+                    Good luck!
             </div>
-            Losses:<div id = "lossResults">
-            </div>
-            Ties:<div id = "tieResults">
-            </div>
-        </div>    
+        </div> 
+        <div class = "resetButtonContainer">
+            <button  class = "buttons" id = "resetButton">Reset</button>
+        </div>  
     </div>
 </body>
 
@@ -58,20 +144,15 @@
 
     function gameOver(){
         if ((wins + losses) == 5){
-            alert("Game over!");
             if (wins > losses){
-                alert("Congrats! You win best of 5!");
+                const finalResults = document.querySelector("#finalResults");
+                finalResults.textContent = "Congrats! You win best of 5!";
+
             } else if (losses > wins){
-                alert("Bummer! You lost to a computer!");
+                const finalResults = document.querySelector("#finalResults");
+                finalResults.textContent = "Bummer! You lost to a computer!";
             }
-            wins = 0;
-            winResults.textContent = wins;
-            losses = 0;
-            lossResults.textContent = losses;
-            ties = 0;
-            tieResults.textContent = ties;
         }
-        
     }
 
     const rockButton = document.querySelector("#rock");
@@ -81,13 +162,13 @@
         
         if (playRound() === 'Win'){
             wins++;
-            alert("Win! Rock beats Scissors!");
+            roundWin();
         } else if (playRound() === 'Lose'){
             losses++;
-            alert("Lose! Paper beats Rock!");
+            roundLose();
         } else if (playRound() === 'Tie'){
             ties++;
-            alert("Tie!");
+            roundTie();
         }
         const winResults = document.querySelector("#winResults");
         winResults.textContent = wins;
@@ -108,13 +189,13 @@
         
         if (playRound() === 'Win'){
             wins++;
-            alert("Win!");
+            roundWin();
         } else if (playRound() === 'Lose'){
             losses++;
-            alert("Lose!");
+            roundLose();
         } else if (playRound() === 'Tie'){
             ties++;
-            alert("Tie!");
+            roundTie();
         }
         const winResults = document.querySelector("#winResults");
         winResults.textContent = wins;
@@ -135,13 +216,13 @@
         
         if (playRound() === 'Win'){
             wins++;
-            alert("win!");
+            roundWin();
         } else if (playRound() === 'Lose'){
             losses++;
-            alert("Lose!");
+            roundLose();
         } else if (playRound() === 'Tie'){
             ties++;
-            alert("Tie!");
+            roundTie();
         }
         const winResults = document.querySelector("#winResults");
         winResults.textContent = wins;
@@ -155,6 +236,30 @@
         gameOver();
     });
 
-    
+    function roundWin(){
+        const roundWin = document.querySelector("#finalResults");
+        roundWin.textContent = 'Win!';
+    }
+
+    function roundLose(){
+        const roundLose = document.querySelector("#finalResults");
+        roundLose.textContent = 'Lose :(';
+    }
+
+    function roundTie(){
+        const roundTie = document.querySelector("#finalResults");
+        roundTie.textContent = 'Tie';
+    }
+
+    const resetButton = document.querySelector("#resetButton")
+    resetButton.addEventListener("click", () => {
+                wins = 0;
+                losses = 0;
+                ties = 0;
+                winResults.textContent = wins;
+                lossResults.textContent = losses;
+                tieResults.textContent = ties;
+                finalResults.textContent = "Good luck!";
+            })
     
 </script>
